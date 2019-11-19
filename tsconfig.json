@@ -11,6 +11,7 @@
       "noEmit": true,
       "strict": true,
       "esModuleInterop": false,
+      "allowSyntheticDefaultImports": true,
       "moduleResolution": "node",
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
