@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express'
+import {Server} from 'http'
 
-export function start(): void {
+
+export function start(): Server {
   const app = express()
   const port: number = 3000
 
@@ -8,12 +10,14 @@ export function start(): void {
     res.send('Hello world!')
   })
 
-  app.listen(port, () => {
+  const server: Server = app.listen(port, () => {
     console.log(`Server is running on ${port}`)
   })
+
+  return server;
 }
 
-start()
+//start()
 
 export function helloWorld(lang = 'Typescript'): string {
   return `🦁 I love ${lang}!`

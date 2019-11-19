@@ -23,7 +23,7 @@ module.exports = {
   
       // Typescript stuff
       '@typescript-eslint/no-var-requires': 'off',
-      '@typescript-eslint/no-inferrable-types' : false
+      '@typescript-eslint/no-inferrable-types' : 'off'
 
     },
   }
