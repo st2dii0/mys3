@@ -1,6 +1,5 @@
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
-// var express = require('express')
 import * as bodyParser from 'body-parser'
 import express, { Request, Response } from 'express'
 import { Routes } from './routes'
