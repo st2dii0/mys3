@@ -1,26 +1,19 @@
-  {
+{
     "compilerOptions": {
-      "lib": [
-        "esnext",
-        "dom",
-        "es6"
-      ],
       "target": "esnext",
+      "moduleResolution": "node",
       "module": "commonjs",
+      "lib": ["esnext", "dom"],
       "allowJs": false,
       "noEmit": true,
       "strict": true,
       "esModuleInterop": false,
-      "moduleResolution": "node",
-      "emitDecoratorMetadata": true,
+      "allowSyntheticDefaultImports": true,
       "experimentalDecorators": true,
       "sourceMap": true,
       "outDir": ".dist"
     },
-    "include": [
-      "src",
-      "types.d.ts"
-    ],
+    "include": ["src", "types.d.ts"],
     "exclude": [
       ".eslintrc.js",
       ".jestrc.js",
@@ -28,3 +21,4 @@
       "prettier.config.js"
     ]
   }
+  

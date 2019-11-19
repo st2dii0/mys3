@@ -1,31 +1,46 @@
-import express, { Request, Response } from 'express'
-import {Server} from 'http'
+import "reflect-metadata";
+import {createConnection} from "typeorm";
+var express = require('express')
+import * as bodyParser from "body-parser";
+import {Request, Response} from "express";
+import {Routes} from "./routes";
+import {User} from "./entity/User";
 
+createConnection().then(async connection => {
 
-export function start(): Server {
-  const app = express()
-  const port: number = 3000
+    // create express app
+    const app = express();
+    app.use(bodyParser.json());
 
-  app.get('/', (req: Request, res: Response) => {
-    res.send('Hello world!')
-  })
+    // register express routes from defined application routes
+    Routes.forEach(route => {
+        (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
+            const result = (new (route.controller as any))[route.action](req, res, next);
+            if (result instanceof Promise) {
+                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
 
-  const server: Server = app.listen(port, () => {
-    console.log(`Server is running on ${port}`)
-  })
+            } else if (result !== null && result !== undefined) {
+                res.json(result);
+            }
+        });
+    });
 
-  return server;
-}
+    // setup express app here
+    // ...
 
-//start()
+    // start express server
+    app.listen(3000);
 
-export function helloWorld(lang = 'Typescript'): string {
-  return `🦁 I love ${lang}!`
-}
+    // insert new users for test
+    await connection.manager.save(connection.manager.create(User, {
+        firstName: "Timber",
+        lastName: "Saw",
+    }));
+    await connection.manager.save(connection.manager.create(User, {
+        firstName: "Phantom",
+        lastName: "Assassin",
+    }));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function devNull(): any {
-  return { hello: 'Efrei' }
-}
+    console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results");
 
-console.log(helloWorld())
+}).catch(error => console.log(error));
